@@ -1,0 +1,57 @@
+{
+  "workspace": ["./apps/api", "./apps/supabase", "./apps/spa"],
+  "nodeModulesDir": "auto",
+  "unstable": ["unsafe-proto"],
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "strict": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "dom.asynciterable",
+      "deno.ns",
+      "deno.unstable",
+    ],
+  },
+  "tasks": {
+    // -- CHORES --
+    "clean": "rm -rf node_modules",
+
+    // -- DEV --
+    "dev:api": "deno task --cwd apps/api dev",
+    "dev:web": "deno task --cwd apps/spa dev",
+
+    // -- DB --
+    "db:generate": "deno task --cwd apps/api db:generate",
+    "db:migrate": "deno task --cwd apps/api db:migrate",
+    "db:push": "deno task --cwd apps/api db:push",
+    "db:pull": "deno task --cwd apps/api db:pull",
+    "db:studio": "deno task --cwd apps/api db:studio",
+
+    // -- SUPABASE --
+    "supabase": "./node_modules/supabase/bin/supabase --workdir apps",
+    "supabase:status": "./node_modules/supabase/bin/supabase status --workdir apps",
+    "supabase:start": "./node_modules/supabase/bin/supabase start --workdir apps",
+    "supabase:login": "./node_modules/supabase/bin/supabase login --workdir apps",
+    "supabase:migrate": "./node_modules/supabase/bin/supabase db seed generate --workdir apps && ./node_modules/supabase/bin/supabase db seed run --workdir apps",
+    "supabase:seed": "./node_modules/supabase/bin/supabase db reset --workdir apps",
+    "supabase:reset": "./node_modules/supabase/bin/supabase db reset --workdir apps",
+    "supabase:generate": "./node_modules/supabase/bin/supabase gen types  --workdir apps --lang=typescript --local --schema public > ./apps/supabase/types.ts",
+  },
+  "fmt": {
+    "include": ["packages/", "apps/"],
+    "useTabs": true,
+    "lineWidth": 120,
+    "indentWidth": 2,
+    "singleQuote": true,
+    "proseWrap": "preserve",
+    "semiColons": false,
+  },
+  "lint": {
+    "exclude": ["apps/spa/src/routeTree.gen.ts"],
+  },
+  "imports": {
+    "arktype": "npm:arktype@2.0.4",
+  },
+}

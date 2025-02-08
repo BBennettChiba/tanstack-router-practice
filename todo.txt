@@ -1,0 +1,11 @@
+both
+  arktype validation
+  tests unit and end to end
+  deno
+  
+front
+  tanstack router
+  tanstack query
+
+back
+  hono

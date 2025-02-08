@@ -1,0 +1,23 @@
+{
+	"tasks": {
+		"dev": "deno run -A --env-file --watch src/index.ts",
+		"start": "deno run -A --env-file src/index.ts"
+		"db:generate": "drizzle-kit generate",
+		"db:migrate": "drizzle-kit migrate",
+		"db:push": "drizzle-kit push",
+		"db:pull": "drizzle-kit pull",
+		"db:studio": "drizzle-kit studio"
+	},
+
+	"imports": {
+		"hono": "npm:hono@4.6.14",
+		"zod": "npm:zod@3.24.1",
+		"@hono/trpc-server": "npm:@hono/trpc-server@0.3.4",
+		"@trpc/server": "npm:@trpc/server@11.0.0-rc.682"
+		"better-auth": "npm:better-auth@1.1.11"
+		"drizzle-kit": "npm:drizzle-kit@0.30.1",
+		"drizzle-orm": "npm:drizzle-orm@0.38.2",
+		"postgres": "npm:postgres@3.4.5",
+    "arktype": "npm:arktype@2.0.4"
+	}
+}
