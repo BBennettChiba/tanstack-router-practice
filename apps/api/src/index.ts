@@ -12,15 +12,6 @@ export async function createDummyUser(data: InsertUser) {
   await db.insert(schema.users).values(data);
 }
 
-app.get("/", (c) => {
-  return c.text("Hello Hono!");
-});
-
-app.get("add", (c) => {
-  const value = 1 + 2;
-  return c.json({ value });
-});
-
 app.use(
   "/api/auth/**", // or replace with "*" to enable cors for all routes
   // "*",

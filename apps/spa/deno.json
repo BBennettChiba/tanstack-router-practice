@@ -12,6 +12,7 @@
     "@trpc/client": "npm:@trpc/client@11.0.0-rc.682",
     "@trpc/react-query": "npm:@trpc/react-query@11.0.0-rc.682",
     "autoprefixer": "npm:autoprefixer@10.4.20",
+    "better-auth": "npm:better-auth@^1.1.16",
     "postcss": "npm:postcss@8.4.49",
     "react": "npm:react@19.0.0",
     "react-dom": "npm:react-dom@19.0.0",
