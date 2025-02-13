@@ -19,5 +19,6 @@
 		"drizzle-orm": "npm:drizzle-orm@0.38.2",
 		"postgres": "npm:postgres@3.4.5",
     "arktype": "npm:arktype@2.0.4"
+    "superjson": "npm:superjson@2.2.2"
 	}
 }

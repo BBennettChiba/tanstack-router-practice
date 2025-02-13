@@ -1,5 +1,5 @@
-import loadEnv from "../../../envLoader.ts";
+import loadEnv from '../../../envLoader.ts'
 
-const env = loadEnv(["VITE_APP_API_BASE_URL"]);
+const env = loadEnv(['VITE_APP_API_BASE_URL'])
 
-export default env;
+export default env

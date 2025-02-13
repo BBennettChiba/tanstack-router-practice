@@ -1,7 +1,8 @@
 import { QueryClient } from '@tanstack/react-query'
-import type { AppRouter } from '../../../api/src/router.ts'
+import type { AppRouter } from '../../../api/src/trpc.ts'
 import { createTRPCQueryUtils, createTRPCReact } from '@trpc/react-query'
 import { httpBatchLink } from '@trpc/client'
+import superjson from 'superjson'
 import env from '../env.ts'
 
 export const queryClient = new QueryClient()
@@ -18,6 +19,7 @@ export const trpcClient = trpc.createClient({
 			fetch(url, option) {
 				return fetch(url, { ...option, credentials: 'include' })
 			},
+			transformer: superjson,
 		}),
 	],
 })

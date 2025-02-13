@@ -1,18 +1,21 @@
-import { Link, ReactNode, useRouterState } from '@tanstack/react-router'
+import { Link, useRouterState } from '@tanstack/react-router'
 import { signOut, useSession } from '../lib/auth-client.ts'
+import type { ReactNode } from 'react'
 
-const noNavbar = ['/login']
+const noNavbar = new Set(['/login'])
 
 export default function NavBar({ children }: { children: ReactNode }) {
 	const router = useRouterState()
 	const currentPath = router.location.pathname
-	const { data } = useSession()
+	const session = useSession()
 
-	if (noNavbar.includes(currentPath)) return children
+	const { data } = session
+
+	if (noNavbar.has(currentPath)) return children
 
 	return (
 		<div>
-			<div className='flex gap-2 p-4'>
+			<div className='flex gap-4 p-4'>
 				<Link to='/'>Home</Link>
 				<Link to='/about'>About</Link>
 				<Link to='/posts'>Posts</Link>

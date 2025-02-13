@@ -7,6 +7,7 @@ import { Loading } from './loading.tsx'
 const loadingTests = describe({
 	name: 'Loading',
 	beforeEach() {
+		console.log('beforeEach')
 	},
 	afterEach() {
 		cleanup()

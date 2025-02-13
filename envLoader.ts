@@ -17,6 +17,7 @@ type FrontendEnv = typeof frontendSchema.infer;
 type EnvSchema = BackendEnv & FrontendEnv;
 type Keys = keyof EnvSchema;
 
+// @ts-ignore deno doesn't support import.meta
 const envData = isServer ? Deno.env.toObject() : import.meta.env;
 
 const parsedEnv = isServer ? backendSchema(envData) : frontendSchema(envData);

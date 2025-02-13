@@ -3,7 +3,7 @@ import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import { trpcQueryUtils } from '../lib/query.ts'
-import Navbar from '../components/Navbar.tsx'
+import Navbar from '../components/navbar.tsx'
 
 export const Route = createRootRouteWithContext<{
 	trpcQueryUtils: typeof trpcQueryUtils

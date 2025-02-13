@@ -3,10 +3,12 @@
     "dev": "vite",
     "start": "vite --host",
     "build": "deno run -A --node-modules-dir=auto npm:vite build",
-    "lint": "eslint .",
     "preview": "vite preview"
   },
   "imports": {
+    "@std/assert": "jsr:@std/assert@^1.0.11",
+    "@std/path": "jsr:@std/path@^1.0.8",
+    "@std/testing": "jsr:@std/testing@^1.0.9",
     "@tanstack/react-query": "npm:@tanstack/react-query@5.62.8",
     "@tanstack/react-router": "npm:@tanstack/react-router@1.95.1",
     "@trpc/client": "npm:@trpc/client@11.0.0-rc.682",
@@ -28,13 +30,9 @@
     "@tanstack/router-plugin": "npm:@tanstack/router-plugin@1.95.1",
     "supports-color": "npm:supports-color@10.0.0",
     "@testing-library/react": "npm:@testing-library/react@16.1.0",
-    "@eslint/js": "npm:@eslint/js@9.20.0",
-    "eslint-plugin-react": "npm:eslint-plugin-react@7.37.4",
-    "typescript-eslint": "npm:typescript-eslint@8.24.0",
-    "eslint-plugin-boundaries": "npm:eslint-plugin-boundaries@5.0.1",
-    "eslint": "npm:eslint@9.20.1",
-    "@typescript-eslint/eslint-plugin": "npm:@typescript-eslint/eslint-plugin@8.24.0",
-    "@typescript-eslint/parser": "npm:@typescript-eslint/parser@8.24.0",
-    "eslint-import-resolver-typescript": "npm:eslint-import-resolver-typescript@3.7.0"
+    "global-jsdom": "npm:global-jsdom@26.0.0",
+    "jsr:": "https://deno.land/x/",
+    "@tanstack/react-table": "npm:@tanstack/react-table@8.21.2",
+    "superjson": "npm:superjson@2.2.2"
   }
 }

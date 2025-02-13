@@ -1,2 +1,2 @@
-import jsdom from 'npm:global-jsdom'
+import jsdom from 'global-jsdom'
 jsdom()
