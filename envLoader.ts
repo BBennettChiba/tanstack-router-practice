@@ -21,7 +21,7 @@ const envData = isServer ? Deno.env.toObject() : import.meta.env;
 
 const parsedEnv = isServer ? backendSchema(envData) : frontendSchema(envData);
 
-const envIsBackend = (env: unknown): env is BackendEnv => isServer;
+const envIsBackend = (_env: unknown): _env is BackendEnv => isServer;
 
 export default function loadEnv<K extends Keys>(keys: readonly K[]) {
   if (parsedEnv instanceof type.errors) {
