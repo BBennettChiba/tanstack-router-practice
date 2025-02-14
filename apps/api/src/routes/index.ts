@@ -1,13 +1,10 @@
-import { router } from '../trpc.ts'
-import { createHelloRouter } from './helloRouter.ts'
-import { createUserRouter } from './userRouter.ts'
+import { userRouter } from './userRouter.ts'
+import { helloRouter } from './helloRouter.ts'
+import { router } from './trpc.ts'
 
-export const getRoutes = () => {
-	const userRouter = createUserRouter()
-	const helloRouter = createHelloRouter()
+export const appRouter = router({
+	user: userRouter,
+	hello: helloRouter,
+})
 
-	return router({
-		user: userRouter,
-		hello: helloRouter,
-	})
-}
+export type AppRouter = typeof appRouter

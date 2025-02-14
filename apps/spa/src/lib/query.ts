@@ -9,15 +9,18 @@ export const queryClient = new QueryClient()
 
 export const trpc = createTRPCReact<AppRouter>({})
 
-const url = `${env.VITE_APP_API_BASE_URL}/trpc`
+const URL = `${env.VITE_API_BASE_URL}/trpc`
 
 export const trpcClient = trpc.createClient({
 	links: [
 		httpBatchLink({
 			// and since its from the same origin, we don't need to explicitly set the full URL
-			url,
+			url: URL,
 			fetch(url, option) {
-				return fetch(url, { ...option, credentials: 'include' })
+				return fetch(url, {
+					...option,
+					credentials: 'include',
+				})
 			},
 			transformer: superjson,
 		}),

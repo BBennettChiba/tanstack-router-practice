@@ -14,7 +14,9 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root.tsx'
 import { Route as LoginImport } from './routes/login.tsx'
-import { Route as PostsIndexImport } from './routes/posts/index.tsx'
+import { Route as UsersIndexImport } from './routes/users/index.tsx'
+import { Route as UsersNewImport } from './routes/users/new.tsx'
+import { Route as UsersUserIdImport } from './routes/users/$userId.tsx'
 import { Route as PostsPostIdImport } from './routes/posts/$postId.tsx'
 
 // Create Virtual Routes
@@ -42,9 +44,21 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy.tsx').then((d) => d.Route))
 
-const PostsIndexRoute = PostsIndexImport.update({
-  id: '/posts/',
-  path: '/posts/',
+const UsersIndexRoute = UsersIndexImport.update({
+  id: '/users/',
+  path: '/users/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const UsersNewRoute = UsersNewImport.update({
+  id: '/users/new',
+  path: '/users/new',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const UsersUserIdRoute = UsersUserIdImport.update({
+  id: '/users/$userId',
+  path: '/users/$userId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -86,11 +100,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsPostIdImport
       parentRoute: typeof rootRoute
     }
-    '/posts/': {
-      id: '/posts/'
-      path: '/posts'
-      fullPath: '/posts'
-      preLoaderRoute: typeof PostsIndexImport
+    '/users/$userId': {
+      id: '/users/$userId'
+      path: '/users/$userId'
+      fullPath: '/users/$userId'
+      preLoaderRoute: typeof UsersUserIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/users/new': {
+      id: '/users/new'
+      path: '/users/new'
+      fullPath: '/users/new'
+      preLoaderRoute: typeof UsersNewImport
+      parentRoute: typeof rootRoute
+    }
+    '/users/': {
+      id: '/users/'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof UsersIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -103,7 +131,9 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/about': typeof AboutLazyRoute
   '/posts/$postId': typeof PostsPostIdRoute
-  '/posts': typeof PostsIndexRoute
+  '/users/$userId': typeof UsersUserIdRoute
+  '/users/new': typeof UsersNewRoute
+  '/users': typeof UsersIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -111,7 +141,9 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/about': typeof AboutLazyRoute
   '/posts/$postId': typeof PostsPostIdRoute
-  '/posts': typeof PostsIndexRoute
+  '/users/$userId': typeof UsersUserIdRoute
+  '/users/new': typeof UsersNewRoute
+  '/users': typeof UsersIndexRoute
 }
 
 export interface FileRoutesById {
@@ -120,15 +152,39 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/about': typeof AboutLazyRoute
   '/posts/$postId': typeof PostsPostIdRoute
-  '/posts/': typeof PostsIndexRoute
+  '/users/$userId': typeof UsersUserIdRoute
+  '/users/new': typeof UsersNewRoute
+  '/users/': typeof UsersIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/about' | '/posts/$postId' | '/posts'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/about'
+    | '/posts/$postId'
+    | '/users/$userId'
+    | '/users/new'
+    | '/users'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/about' | '/posts/$postId' | '/posts'
-  id: '__root__' | '/' | '/login' | '/about' | '/posts/$postId' | '/posts/'
+  to:
+    | '/'
+    | '/login'
+    | '/about'
+    | '/posts/$postId'
+    | '/users/$userId'
+    | '/users/new'
+    | '/users'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/about'
+    | '/posts/$postId'
+    | '/users/$userId'
+    | '/users/new'
+    | '/users/'
   fileRoutesById: FileRoutesById
 }
 
@@ -137,7 +193,9 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   AboutLazyRoute: typeof AboutLazyRoute
   PostsPostIdRoute: typeof PostsPostIdRoute
-  PostsIndexRoute: typeof PostsIndexRoute
+  UsersUserIdRoute: typeof UsersUserIdRoute
+  UsersNewRoute: typeof UsersNewRoute
+  UsersIndexRoute: typeof UsersIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -145,7 +203,9 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   AboutLazyRoute: AboutLazyRoute,
   PostsPostIdRoute: PostsPostIdRoute,
-  PostsIndexRoute: PostsIndexRoute,
+  UsersUserIdRoute: UsersUserIdRoute,
+  UsersNewRoute: UsersNewRoute,
+  UsersIndexRoute: UsersIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -162,7 +222,9 @@ export const routeTree = rootRoute
         "/login",
         "/about",
         "/posts/$postId",
-        "/posts/"
+        "/users/$userId",
+        "/users/new",
+        "/users/"
       ]
     },
     "/": {
@@ -177,8 +239,14 @@ export const routeTree = rootRoute
     "/posts/$postId": {
       "filePath": "posts/$postId.tsx"
     },
-    "/posts/": {
-      "filePath": "posts/index.tsx"
+    "/users/$userId": {
+      "filePath": "users/$userId.tsx"
+    },
+    "/users/new": {
+      "filePath": "users/new.tsx"
+    },
+    "/users/": {
+      "filePath": "users/index.tsx"
     }
   }
 }

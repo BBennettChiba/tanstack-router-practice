@@ -18,7 +18,7 @@ export default function NavBar({ children }: { children: ReactNode }) {
 			<div className='flex gap-4 p-4'>
 				<Link to='/'>Home</Link>
 				<Link to='/about'>About</Link>
-				<Link to='/posts'>Posts</Link>
+				<Link to='/users'>Users</Link>
 				{data?.session ? null : <Link to='/login'>login</Link>}
 				<SignOutButton isLoggedIn={!!data?.session} />
 			</div>

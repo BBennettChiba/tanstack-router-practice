@@ -6,7 +6,7 @@ import env from '../env.ts'
 import { schema } from './db.ts' //@TODO think about making schema a dpenendncy
 import { PostgresJsDatabase } from 'drizzle-orm/postgres-js/driver'
 
-export const createAuth = (db: PostgresJsDatabase) =>
+export const createAuth = (db: PostgresJsDatabase<typeof schema>) =>
 	betterAuth({
 		// Fix the baseURL to the auth server
 		baseURL: `http://localhost:${env.PORT}`,

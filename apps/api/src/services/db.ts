@@ -4,7 +4,7 @@ import * as schema from '../schema/index.ts'
 
 const createClient = (databaseUrl: string) => postgres(databaseUrl)
 
-const createDb = (client: postgres.Sql) => drizzle({ client })
+const createDb = (client: postgres.Sql) => drizzle({ client, schema })
 
 export { createClient, createDb, schema }
 export * from './types.ts'

@@ -5,5 +5,5 @@ import env from '../env.ts'
 export const { signIn, signOut, useSession } = createAuthClient({
 	appName: 'Runreal-deno-template',
 	plugins: [magicLinkClient()],
-	baseURL: env.VITE_APP_API_BASE_URL,
+	baseURL: env.VITE_API_BASE_URL,
 })

@@ -1,40 +1,21 @@
-import { initTRPC, TRPCError } from '@trpc/server'
 import { Hono } from 'hono'
 import { cors } from 'npm:hono/cors'
 import { trpcServer } from '@hono/trpc-server'
-import { AuthInstance, type Session } from './services/auth.ts'
-import superjson from 'superjson'
+import { AuthInstance } from './services/auth.ts'
 import { PostgresJsDatabase } from 'drizzle-orm/postgres-js/driver'
-import { getRoutes } from './routes/index.ts'
+import { appRouter } from './routes/index.ts'
+import type { schema } from './services/db.ts'
+import env from './env.ts'
 
-interface Context {
-	session?: Session
-	db: PostgresJsDatabase
-}
+console.log(env.FE_HOST)
 
-const trpc = initTRPC.context<Context>().create({ transformer: superjson })
-
-export const router = trpc.router
-
-export const publicProcedure = trpc.procedure
-
-export const protectedProcedure = trpc.procedure.use(function isAuth(opts) {
-	const { ctx } = opts
-	if (!ctx.session) {
-		throw new TRPCError({ code: 'UNAUTHORIZED' })
-	}
-	return opts.next(opts)
-})
-
-const appRouter = trpc.mergeRouters(getRoutes())
-
-const createTrpcApp = (db: PostgresJsDatabase, auth: AuthInstance) => {
+const createTrpcApp = (db: PostgresJsDatabase<typeof schema>, auth: AuthInstance) => {
 	const trpcApp = new Hono()
 
 	trpcApp.use(
-		'/trpc/*',
+		'*',
 		cors({
-			origin: 'http://localhost:5173', // replace with your origin
+			origin: env.FE_HOST,
 			allowHeaders: ['Content-Type', 'Authorization'],
 			allowMethods: ['POST', 'GET', 'OPTIONS'],
 			exposeHeaders: ['Content-Length'],

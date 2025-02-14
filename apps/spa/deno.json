@@ -33,6 +33,15 @@
     "global-jsdom": "npm:global-jsdom@26.0.0",
     "jsr:": "https://deno.land/x/",
     "@tanstack/react-table": "npm:@tanstack/react-table@8.21.2",
-    "superjson": "npm:superjson@2.2.2"
+    "superjson": "npm:superjson@2.2.2",
+    "@hookform/resolvers": "npm:@hookform/resolvers@4.0.0",
+    "@radix-ui/react-label": "npm:@radix-ui/react-label@2.1.2",
+    "@radix-ui/react-slot": "npm:@radix-ui/react-slot@1.1.2",
+    "class-variance-authority": "npm:class-variance-authority@0.7.1",
+    "clsx": "npm:clsx@2.1.1",
+    "lucide-react": "npm:lucide-react@0.475.0",
+    "react-hook-form": "npm:react-hook-form@7.54.2",
+    "tailwind-merge": "npm:tailwind-merge@3.0.1",
+    "tailwindcss-animate": "npm:tailwindcss-animate@1.0.7",
   }
 }

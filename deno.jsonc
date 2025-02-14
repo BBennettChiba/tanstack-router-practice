@@ -40,7 +40,7 @@
     "supabase:generate": "./node_modules/supabase/bin/supabase gen types  --workdir apps --lang=typescript --local --schema public > ./apps/supabase/types.ts",
   },
   "fmt": {
-    "include": ["packages/", "apps/"],
+    "include": ["packages/", "apps/", "envLoader.ts"],
     "useTabs": true,
     "lineWidth": 120,
     "indentWidth": 2,
