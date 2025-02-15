@@ -1,7 +1,7 @@
 import { betterAuth } from 'better-auth'
 import { magicLink, openAPI } from 'better-auth/plugins'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
-import env from '../env.ts'
+import env from '../../env.ts'
 
 import { schema } from './db.ts' //@TODO think about making schema a dpenendncy
 import { PostgresJsDatabase } from 'drizzle-orm/postgres-js/driver'
@@ -12,7 +12,7 @@ export const createAuth = (db: PostgresJsDatabase<typeof schema>) =>
 		baseURL: `http://localhost:${env.PORT}`,
 		appName: 'Runreal-deno-template',
 		// I really need this
-		trustedOrigins: ['http://localhost:5173'],
+		trustedOrigins: ['http://localhost:5173', env.FE_HOST],
 		secret: env.BETTER_AUTH_SECRET,
 		database: drizzleAdapter(db, {
 			provider: 'pg',
