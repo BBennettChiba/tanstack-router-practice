@@ -2,11 +2,11 @@
 	"tasks": {
 		"dev": "deno run -A --env-file --watch src/index.ts",
 		"start": "deno run -A --env-file src/index.ts"
-		"db:generate": "drizzle-kit generate",
+		"db:generate": "deno --env -A --node-modules-dir npm:drizzle-kit generate",
 		"db:migrate": "deno --env -A --node-modules-dir npm:drizzle-kit migrate",
-		"db:push": "drizzle-kit push",
-		"db:pull": "drizzle-kit pull",
-		"db:studio": "drizzle-kit studio"
+		"db:push": "deno --env -A --node-modules-dir npm:drizzle-kit push",
+		"db:pull": "deno --env -A --node-modules-dir npm:drizzle-kit pull",
+		"db:studio": "deno --env -A --node-modules-dir npm:drizzle-kit studio"
 	},
 
 	"imports": {

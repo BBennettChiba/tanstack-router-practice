@@ -1,4 +1,4 @@
-import env from './env.ts'
+import env from '../env.ts'
 import { createApp } from './app.ts'
 
 const app = createApp()

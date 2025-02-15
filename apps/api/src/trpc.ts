@@ -5,7 +5,7 @@ import { AuthInstance } from './services/auth.ts'
 import { PostgresJsDatabase } from 'drizzle-orm/postgres-js/driver'
 import { appRouter } from './routes/index.ts'
 import type { schema } from './services/db.ts'
-import env from './env.ts'
+import env from '../env.ts'
 
 console.log(env.FE_HOST)
 
