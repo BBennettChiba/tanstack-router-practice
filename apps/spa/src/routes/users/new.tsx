@@ -23,6 +23,7 @@ const user = type({
 	name: 'string >= 3',
 	password: 'string >= 8',
 	passwordConfirm: 'string >= 8',
+	email: 'string.email',
 }).narrow(({ password, passwordConfirm }, ctx) => {
 	if (password !== passwordConfirm) {
 		ctx.reject({
@@ -41,14 +42,13 @@ const user = type({
 function RouteComponent() {
 	const form = useForm({
 		resolver: arktypeResolver(user),
-		defaultValues: { name: '', password: '', passwordConfirm: '' },
+		defaultValues: { name: '', password: '', passwordConfirm: '', email: '' },
 	})
 
 	const { mutate } = trpc.user.createUser.useMutation()
 
 	const submit = (data: typeof user.infer) => {
-		const newUser = { ...data, email: 'alijldf@ajijldf.com', emailVerified: false }
-		mutate(newUser)
+		mutate(data)
 	}
 
 	return (
@@ -67,6 +67,22 @@ function RouteComponent() {
 								</FormControl>
 								<FormDescription>
 									This is your public display name.
+								</FormDescription>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name='email'
+						render={({ field }) => (
+							<FormItem className='w-1/3'>
+								<FormLabel>email</FormLabel>
+								<FormControl>
+									<Input placeholder='example@gmail.com' type='email' {...field} />
+								</FormControl>
+								<FormDescription>
+									please input a valid email
 								</FormDescription>
 								<FormMessage />
 							</FormItem>

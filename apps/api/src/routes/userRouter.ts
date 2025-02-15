@@ -20,4 +20,9 @@ export const userRouter = router({
 		.query(async ({ input, ctx: { db } }) => {
 			return await db.query.users.findFirst({ where: eq(schema.users.id, input) })
 		}),
+	deleteUserById: protectedProcedure
+		.input(type('string').assert)
+		.mutation(async ({ input, ctx: { db } }) => {
+			return await db.delete(schema.users).where(eq(schema.users.id, input))
+		}),
 })

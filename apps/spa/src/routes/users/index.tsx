@@ -3,21 +3,30 @@ import { trpc } from '../../lib/query.ts'
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { User } from 'npm:better-auth@1.1.11/types'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table.tsx'
+import { Trash2 } from 'lucide-react'
 
 const columns: ColumnDef<User>[] = [
 	{
-		accessorKey: 'id',
-		header: 'Id',
+		accessorKey: 'name',
+		header: 'Name',
 	},
 	{
 		accessorKey: 'email',
 		header: 'Email',
 	},
 	{
-		accessorKey: 'name',
-		header: 'Name',
+		accessorKey: 'createdAt',
+		header: 'Created At',
+		cell: ({ cell }) => new Date(cell.row.original.createdAt).toLocaleString(),
 	},
-	{ accessorKey: 'createdAt', header: 'Created At' },
+	{
+		id: 'delete',
+		enableHiding: false,
+		cell: ({ row }) => {
+			const { mutate } = trpc.user.deleteUserById.useMutation()
+			return <Trash2 onClick={() => mutate(row.original.id)} />
+		},
+	},
 ]
 
 export const Route = createFileRoute('/users/')({
