@@ -6,7 +6,7 @@ type User = typeof users.$inferInsert
 export const userSchema = type({
 	name: 'string',
 	email: 'string.email',
-	emailVerified: 'boolean',
+	'emailVerified?': 'boolean',
 	'image?': 'null | string',
 	'role?': 'string',
 }).as<User>()
