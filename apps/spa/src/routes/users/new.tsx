@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useForm } from 'react-hook-form'
 import { type } from 'arktype'
 import { arktypeResolver } from '@hookform/resolvers/arktype'
@@ -45,7 +45,13 @@ function RouteComponent() {
 		defaultValues: { name: '', password: '', passwordConfirm: '', email: '' },
 	})
 
-	const { mutate } = trpc.user.createUser.useMutation()
+	const navigate = useNavigate({ from: '/users/new' })
+
+	const { mutate } = trpc.user.createUser.useMutation({
+		onSuccess: () => {
+			navigate({ to: '/users' })
+		},
+	})
 
 	const submit = (data: typeof user.infer) => {
 		mutate(data)

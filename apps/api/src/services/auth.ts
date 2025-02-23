@@ -1,5 +1,5 @@
 import { betterAuth } from 'better-auth'
-import { magicLink, openAPI } from 'better-auth/plugins'
+import { admin, magicLink, openAPI } from 'better-auth/plugins'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import env from '../../env.ts'
 
@@ -31,6 +31,7 @@ export const createAuth = (db: PostgresJsDatabase<typeof schema>) =>
 			},
 		},
 		plugins: [
+			admin({ defaultRole: 'user' }),
 			openAPI(),
 			magicLink({
 				sendMagicLink: ({ email, token, url }) => {

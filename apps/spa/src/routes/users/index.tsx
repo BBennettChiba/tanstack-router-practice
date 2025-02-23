@@ -1,42 +1,82 @@
-import { createFileRoute, Link, Navigate } from '@tanstack/react-router'
+import { createFileRoute, Link, Navigate, ReactNode, redirect } from '@tanstack/react-router'
 import { trpc } from '../../lib/query.ts'
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { User } from 'npm:better-auth@1.1.11/types'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table.tsx'
 import { Trash2 } from 'lucide-react'
+import { getSession } from '../../lib/auth-client.ts'
+
+const LinkToUserId = ({ userId, content }: { userId: string; content: ReactNode | Element }) => {
+	return (
+		<TableCell>
+			<Link to={`/users/$userId`} params={{ userId }}>{content}</Link>
+		</TableCell>
+	)
+}
 
 const columns: ColumnDef<User>[] = [
 	{
 		accessorKey: 'name',
 		header: 'Name',
+		cell: ({ cell }) => <LinkToUserId userId={cell.row.original.id} content={cell.getValue()} />,
 	},
 	{
 		accessorKey: 'email',
 		header: 'Email',
+		cell: ({ cell }) => <LinkToUserId userId={cell.row.original.id} content={cell.getValue()} />,
 	},
 	{
 		accessorKey: 'createdAt',
 		header: 'Created At',
-		cell: ({ cell }) => new Date(cell.row.original.createdAt).toLocaleString(),
+		cell: ({ cell }) => (
+			<LinkToUserId userId={cell.row.original.id} content={new Date(cell.row.original.createdAt).toLocaleString()} />
+		),
 	},
 	{
 		id: 'delete',
 		enableHiding: false,
 		cell: ({ row }) => {
-			const { mutate } = trpc.user.deleteUserById.useMutation()
-			return <Trash2 onClick={() => mutate(row.original.id)} />
+			const { mutate } = trpc.user.deleteUserById.useMutation({
+				onSuccess: () => {
+					utils.user.getUsers.setData(undefined, (oldData) => {
+						if (!oldData) {
+							return []
+						}
+						return oldData.filter((user) => user.id !== row.original.id)
+					})
+				},
+			})
+			const utils = trpc.useUtils()
+
+			const handleDelete = () => {
+				alert('are you sure?')
+				mutate(row.original.id)
+			}
+
+			return (
+				<TableCell className='flex justify-center'>
+					<button onClick={handleDelete} className='hover:text-red-500'>
+						<Trash2 />
+					</button>
+				</TableCell>
+			)
 		},
 	},
 ]
 
 export const Route = createFileRoute('/users/')({
 	component: Users,
+	beforeLoad: async () => {
+		const { data: session } = await getSession()
+
+		if (!session) throw redirect({ to: '/login' })
+	},
 	errorComponent: () => <Navigate to='/login' />,
 	loader: async ({ context: { trpcQueryUtils } }) => await trpcQueryUtils.user.getUsers.ensureData(),
 })
 
 function Users() {
-	const { data } = trpc.user.getUsers.useQuery()
+	const { data: users } = trpc.user.getUsers.useQuery()
 
 	return (
 		<div className='w-4/5 m-auto'>
@@ -46,7 +86,7 @@ function Users() {
 					<button className='bg-slate-400 p-3 rounded'>create user</button>
 				</Link>
 			</div>
-			<DataTable columns={columns} data={data || []} />
+			<DataTable columns={columns} data={users || []} />
 		</div>
 	)
 }
@@ -59,7 +99,7 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
 	columns,
 	data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData, TValue>) { // I don't know why I have to strictly type this
 	const table = useReactTable({
 		data,
 		columns,
@@ -93,13 +133,7 @@ export function DataTable<TData, TValue>({
 									key={row.id}
 									data-state={row.getIsSelected() && 'selected'}
 								>
-									{row.getVisibleCells().map((cell) => (
-										<TableCell key={cell.id}>
-											<Link to={`/users/$userId`} params={{ userId: row.getValue('id')! }}>
-												{flexRender(cell.column.columnDef.cell, cell.getContext())}
-											</Link>
-										</TableCell>
-									))}
+									{row.getVisibleCells().map((cell) => flexRender(cell.column.columnDef.cell, cell.getContext()))}
 								</TableRow>
 							))
 						)
